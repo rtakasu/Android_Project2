@@ -30,7 +30,7 @@ import java.util.Random;
 public class MainActivity extends AppCompatActivity {
 
     private WebView webview;
-    private EditText editBrowserText;
+    private EditText editText;
     private EditText editSelectionSortText;
     private RelativeLayout tab1;
     private RelativeLayout tab2;
@@ -42,6 +42,8 @@ public class MainActivity extends AppCompatActivity {
     private ProgressDialog progressBar;
 
     // Declare buttons
+    private Button back_button;
+    private Button refresh_button;
     private Button min_brightness_button;
     private Button med_brightness_button;
     private Button max_brightness_button;
@@ -104,7 +106,7 @@ public class MainActivity extends AppCompatActivity {
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
 
         this.webview = (WebView)findViewById(R.id.webview);
-        this.editBrowserText = (EditText)findViewById(R.id.editBrowserText);
+        this.editText = (EditText)findViewById(R.id.editText);
         this.editSelectionSortText = (EditText)findViewById(R.id.editSelectionSortText);
         this.timerTextView = (TextView)findViewById(R.id.timerTextView);
         this.selectionSortTextView = (TextView)findViewById(R.id.selectionSortTextView);
@@ -115,6 +117,14 @@ public class MainActivity extends AppCompatActivity {
         WebSettings settings = webview.getSettings();
         settings.setJavaScriptEnabled(true);
         webview.setScrollBarStyle(WebView.SCROLLBARS_OUTSIDE_OVERLAY);
+
+        back_button = (Button) findViewById(R.id.back_button);
+        BackButtonClickListener backButtonClickListener = new BackButtonClickListener();
+        back_button.setOnClickListener(backButtonClickListener);
+
+        refresh_button = (Button) findViewById(R.id.refresh_button);
+        RefreshButtonClickListener refreshButtonClickListener = new RefreshButtonClickListener();
+        refresh_button.setOnClickListener(refreshButtonClickListener);
 
         progressBar = ProgressDialog.show(MainActivity.this, "WebView", "Loading...");
 
@@ -135,12 +145,12 @@ public class MainActivity extends AppCompatActivity {
         });
         webview.loadUrl("https://www.google.com");
 
-        editBrowserText.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+        editText.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
                 boolean handled = false;
                 if (actionId == EditorInfo.IME_ACTION_SEND) {
-                    webview.loadUrl(editBrowserText.getText().toString());
+                    webview.loadUrl(editText.getText().toString());
 
                     handled = true;
                 }
@@ -164,6 +174,29 @@ public class MainActivity extends AppCompatActivity {
         med_brightness_button.setOnClickListener(medOnClickListener);
         MaxBrightnessClickListener maxOnClickListener = new MaxBrightnessClickListener();
         max_brightness_button.setOnClickListener(maxOnClickListener);
+    }
+
+
+    private class BackButtonClickListener implements View.OnClickListener {
+        @Override
+        public void onClick(View v) {
+
+            if (webview.canGoBack()) {
+                webview.goBack();
+            }
+
+        }
+
+    }
+
+    private class RefreshButtonClickListener implements View.OnClickListener {
+        @Override
+        public void onClick(View v) {
+
+            webview.reload();
+
+        }
+
     }
 
     private class SelectionSortClickListener implements View.OnClickListener  {
