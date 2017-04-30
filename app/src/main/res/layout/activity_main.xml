@@ -29,10 +29,11 @@
             android:layout_height="fill_parent"
             android:id="@+id/tab1">
 
+
             <LinearLayout
+                android:id="@+id/editBrowserText"
                 android:layout_width="fill_parent"
-                android:layout_height="50dp"
-                android:id="@+id/browserHeader">
+                android:layout_height="50dp">
 
                 <Button
                     android:layout_width="60dp"
@@ -60,7 +61,8 @@
             <WebView android:id="@+id/webview"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_below="@+id/browserHeader"
+                android:layout_below="@+id/editBrowserText"
+                android:layout_weight="1"
                 android:visibility="visible">
 
 
@@ -100,12 +102,46 @@
                 android:textSize="12sp"/>
 
             <TextView
-                android:id="@+id/timer"
+                android:id="@+id/timerTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerHorizontal="true"
                 android:layout_centerVertical="true"
-                android:text="TextView" />
+                android:text="Timer" />
+
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:id="@+id/tab3"
+            android:visibility="invisible">
+
+            <EditText
+                android:id="@+id/editSelectionSortText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:ems="13"
+                android:inputType="textUri"
+                android:hint="How many numbers in list?"/>
+
+            <Button
+                android:id="@+id/selectionSortButton"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:text="Run Selection Sort"
+                android:layout_toRightOf="@id/editSelectionSortText"
+                android:textSize="12sp"/>
+
+            <TextView
+                android:id="@+id/selectionSortTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true"
+                android:text="" />
+
 
 
         </RelativeLayout>
