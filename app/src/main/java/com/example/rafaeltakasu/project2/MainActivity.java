@@ -42,10 +42,12 @@ public class MainActivity extends AppCompatActivity {
             switch (item.getItemId()) {
                 case R.id.navigation_home:
                     webview.setVisibility(View.VISIBLE);
+                    editText.setVisibility(View.VISIBLE);
                     max_brightness_button.setVisibility(View.INVISIBLE);
                     return true;
                 case R.id.navigation_dashboard:
                     webview.setVisibility(View.INVISIBLE);
+                    editText.setVisibility(View.INVISIBLE);
                     max_brightness_button.setVisibility(View.VISIBLE);
                     return true;
                 case R.id.navigation_notifications:
@@ -58,6 +60,7 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        setTitle("");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
