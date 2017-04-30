@@ -32,9 +32,7 @@
             <EditText
                 android:id="@+id/editText"
                 android:layout_width="fill_parent"
-                android:layout_height="110px"
-                android:layout_x="95dp"
-                android:layout_y="-9dp"
+                android:layout_height="50dp"
                 android:ems="10"
                 android:inputType="textUri"
                 android:imeOptions="actionSend"/>
