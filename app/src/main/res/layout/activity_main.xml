@@ -26,7 +26,8 @@
 
         <RelativeLayout
             android:layout_width="fill_parent"
-            android:layout_height="fill_parent">
+            android:layout_height="fill_parent"
+            android:id="@+id/tab1">
 
             <EditText
                 android:id="@+id/editText"
@@ -52,13 +53,39 @@
         </RelativeLayout>
 
 
-        <Button
-            android:id="@+id/max_brightness"
-            android:layout_width="wrap_content"
-            android:layout_height="100px"
-            android:text="Max brightness"
-            android:textSize="12sp"
-            android:visibility="invisible"/>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/tab2">
+            
+            <Button
+                android:id="@+id/min_brightness"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Min brightness"
+                android:textSize="12sp"
+                android:visibility="invisible"/>
+
+            <Button
+                android:id="@+id/med_brightness"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Medium brightness"
+                android:layout_toRightOf="@id/min_brightness"
+                android:textSize="12sp"
+                android:visibility="invisible"/>
+
+            <Button
+                android:id="@+id/max_brightness"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Max brightness"
+                android:layout_toRightOf="@id/med_brightness"
+                android:textSize="12sp"
+                android:visibility="invisible"/>
+
+        </RelativeLayout>
+
 
     </FrameLayout>
 
