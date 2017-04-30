@@ -1,6 +1,7 @@
 package com.example.rafaeltakasu.project2;
 
 import android.app.ProgressDialog;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.NonNull;
@@ -22,6 +23,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Spinner;
 import android.widget.ArrayAdapter;
+import android.widget.AdapterView;
 import android.widget.Toast;
 
 import org.w3c.dom.Text;
@@ -35,6 +37,7 @@ public class MainActivity extends AppCompatActivity {
     private EditText editText;
     private Spinner listSizeSpinner;
     private Spinner runTimesSpinner;
+    private Spinner backgroundColorSpinner;
     private RelativeLayout tab1;
     private RelativeLayout tab2;
     private RelativeLayout tab3;
@@ -124,6 +127,37 @@ public class MainActivity extends AppCompatActivity {
         this.tab2 = (RelativeLayout)findViewById(R.id.tab2);
         this.tab3 = (RelativeLayout)findViewById(R.id.tab3);
 
+
+        this.backgroundColorSpinner = (Spinner)findViewById(R.id.backgroundColorSpinner);
+        items = new String[]{"Choose Background Color","Black", "White", "Red", "Green", "Blue"};
+        adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, items);
+        backgroundColorSpinner.setAdapter(adapter);
+        backgroundColorSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                String color = backgroundColorSpinner.getSelectedItem().toString();
+                if (color == "Black"){
+                    tab2.setBackgroundColor(Color.BLACK);
+                    timerTextView.setTextColor(Color.WHITE);
+                } else if (color == "White"){
+                    tab2.setBackgroundColor(Color.WHITE);
+                    timerTextView.setTextColor(Color.BLACK);
+                } else if (color == "Red"){
+                    tab2.setBackgroundColor(Color.RED);
+                    timerTextView.setTextColor(Color.BLACK);
+                } else if (color == "Green"){
+                    tab2.setBackgroundColor(Color.GREEN);
+                    timerTextView.setTextColor(Color.BLACK);
+                } else if (color == "Blue"){
+                    tab2.setBackgroundColor(Color.BLUE);
+                    timerTextView.setTextColor(Color.BLACK);
+                }
+            }
+
+            public void onNothingSelected(AdapterView<?> adapterView) {
+                return;
+            }
+        });
+
         WebSettings settings = webview.getSettings();
         settings.setJavaScriptEnabled(true);
         webview.setScrollBarStyle(WebView.SCROLLBARS_OUTSIDE_OVERLAY);
@@ -169,13 +203,13 @@ public class MainActivity extends AppCompatActivity {
         });
 
         selectionSortButton = (Button) findViewById(R.id.selectionSortButton);
+        SelectionSortClickListener selectionClickListener = new SelectionSortClickListener();
+        selectionSortButton.setOnClickListener(selectionClickListener);
 
         min_brightness_button = (Button) findViewById(R.id.min_brightness);
         med_brightness_button = (Button) findViewById(R.id.med_brightness);
         max_brightness_button = (Button) findViewById(R.id.max_brightness);
 
-        SelectionSortClickListener selectionClickListener = new SelectionSortClickListener();
-        selectionSortButton.setOnClickListener(selectionClickListener);
 
         // onClickListener for the brightness button
         MinBrightnessClickListener minOnClickListener = new MinBrightnessClickListener();
