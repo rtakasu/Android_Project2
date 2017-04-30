@@ -20,6 +20,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Spinner;
+import android.widget.ArrayAdapter;
 import android.widget.Toast;
 
 import org.w3c.dom.Text;
@@ -31,7 +33,8 @@ public class MainActivity extends AppCompatActivity {
 
     private WebView webview;
     private EditText editText;
-    private EditText editSelectionSortText;
+    private Spinner listSizeSpinner;
+    private Spinner runTimesSpinner;
     private RelativeLayout tab1;
     private RelativeLayout tab2;
     private RelativeLayout tab3;
@@ -107,7 +110,14 @@ public class MainActivity extends AppCompatActivity {
 
         this.webview = (WebView)findViewById(R.id.webview);
         this.editText = (EditText)findViewById(R.id.editText);
-        this.editSelectionSortText = (EditText)findViewById(R.id.editSelectionSortText);
+        this.listSizeSpinner = (Spinner)findViewById(R.id.listSizeSpinner);
+        String[] items = new String[]{"10", "1,000", "10,000", "100,000"};
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, items);
+        listSizeSpinner.setAdapter(adapter);
+        this.runTimesSpinner = (Spinner)findViewById(R.id.runTimesSpinner);
+        items = new String[]{"10", "50", "100"};
+        adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, items);
+        runTimesSpinner.setAdapter(adapter);
         this.timerTextView = (TextView)findViewById(R.id.timerTextView);
         this.selectionSortTextView = (TextView)findViewById(R.id.selectionSortTextView);
         this.tab1 = (RelativeLayout)findViewById(R.id.tab1);
@@ -202,40 +212,33 @@ public class MainActivity extends AppCompatActivity {
     private class SelectionSortClickListener implements View.OnClickListener  {
         @Override
         public void onClick(View v)  {
-            int listSize = 0;
             boolean complete = false;
-            try {
-                Random rand = new Random();
-                String size = editSelectionSortText.getText().toString();
-                listSize = Integer.parseInt(size);
-                if(listSize < 100000000) {
-                    int list[] = new int[listSize];
-                    for (int i = 0; i < list.length; i++) {
-                        list[i] = rand.nextInt(listSize);
-                    }
-                    int min;
-                    for (int i = 0; i < list.length; i++) {
-                        min = i;
-                        for (int j = i + 1; j < list.length; j++) {
-                            if (list[j] < list[min]) {
-                                min = j;
-
-                            }
-                        }
-                        if (min != i) {
-                            final int temp = list[i];
-                            list[i] = list[min];
-                            list[min] = temp;
-                        }
-                    }
-                    selectionSortTextView.setText("Done!");
-                } else {
-                    selectionSortTextView.setText(size + " is too large!");
+            Random rand = new Random();
+            String size = listSizeSpinner.getSelectedItem().toString();
+            String times = runTimesSpinner.getSelectedItem().toString();
+            int numTimes = Integer.parseInt(times);
+            for (int x = 0; x < numTimes; x++) {
+                int listSize = Integer.parseInt(size.replaceAll(",", ""));
+                int list[] = new int[listSize];
+                for (int i = 0; i < list.length; i++) {
+                    list[i] = rand.nextInt(listSize);
                 }
-            } catch(NumberFormatException nfe) {
-                selectionSortTextView.setText("Could not parse " + nfe);
-                System.out.println("Could not parse " + nfe);
+                int min;
+                for (int i = 0; i < list.length; i++) {
+                    min = i;
+                    for (int j = i + 1; j < list.length; j++) {
+                        if (list[j] < list[min]) {
+                            min = j;
+                        }
+                    }
+                    if (min != i) {
+                        final int temp = list[i];
+                        list[i] = list[min];
+                        list[min] = temp;
+                    }
+                }
             }
+            selectionSortTextView.setText("Finished sorting " + times + " lists of size " + size + " using Selection Sort!");
         }
 
     }

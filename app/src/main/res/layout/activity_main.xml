@@ -117,20 +117,57 @@
             android:id="@+id/tab3"
             android:visibility="invisible">
 
-            <EditText
-                android:id="@+id/editSelectionSortText"
+            <TextView
+                android:id="@+id/invisibleTextView1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+            <TextView
+                android:id="@+id/invisibleTextView2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:ems="13"
-                android:inputType="textUri"
-                android:hint="How many numbers in list?"/>
+                android:layout_below="@+id/invisibleTextView1"/>
+
+            <TextView
+                android:id="@+id/listSizeText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/invisibleTextView2"
+                android:gravity="center"
+                android:text="List Size:"/>
+
+            <Spinner
+                android:id="@+id/listSizeSpinner"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@+id/listSizeText"
+                android:layout_alignBaseline="@+id/listSizeText"
+                android:background="@android:drawable/btn_dropdown"
+                android:spinnerMode="dropdown" />
+
+            <TextView
+                android:id="@+id/numListsText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:layout_toRightOf="@+id/listSizeSpinner"
+                android:layout_alignBaseline="@+id/listSizeSpinner"
+                android:text="# Of Lists:"/>
+
+            <Spinner
+                android:id="@+id/runTimesSpinner"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@+id/numListsText"
+                android:layout_alignBaseline="@+id/numListsText"
+                android:background="@android:drawable/btn_dropdown"
+                android:spinnerMode="dropdown"/>
 
             <Button
                 android:id="@+id/selectionSortButton"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
+                android:layout_below="@+id/listSizeSpinner"
                 android:text="Run Selection Sort"
-                android:layout_toRightOf="@id/editSelectionSortText"
                 android:textSize="12sp"/>
 
             <TextView
