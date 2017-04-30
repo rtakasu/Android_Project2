@@ -29,19 +29,38 @@
             android:layout_height="fill_parent"
             android:id="@+id/tab1">
 
-            <EditText
-                android:id="@+id/editText"
+            <LinearLayout
                 android:layout_width="fill_parent"
                 android:layout_height="50dp"
-                android:ems="10"
-                android:inputType="textUri"
-                android:imeOptions="actionSend"/>
+                android:id="@+id/browserHeader">
+
+                <Button
+                    android:layout_width="60dp"
+                    android:layout_height="wrap_content"
+                    android:text="Back" />
+                <Button
+                    android:layout_width="90dp"
+                    android:layout_height="wrap_content"
+                    android:text="Refresh"
+                    />
+                <EditText
+                    android:id="@+id/editText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="fill_parent"
+                    android:ems="10"
+                    android:inputType="textUri"
+                    android:imeOptions="actionSend"/>
+
+            </LinearLayout>
+
+
+
+
 
             <WebView android:id="@+id/webview"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_below="@+id/editText"
-                android:layout_weight="1"
+                android:layout_below="@+id/browserHeader"
                 android:visibility="visible">
 
 
