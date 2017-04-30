@@ -29,6 +29,7 @@ public class MainActivity extends AppCompatActivity {
     private EditText editText;
     private RelativeLayout tab1;
     private RelativeLayout tab2;
+    private RelativeLayout tab3;
 
     private static final String TAG = "Main";
     private ProgressDialog progressBar;
@@ -45,15 +46,20 @@ public class MainActivity extends AppCompatActivity {
         @Override
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
             switch (item.getItemId()) {
-                case R.id.navigation_home:
+                case R.id.navigation_browser:
                     tab1.setVisibility(View.VISIBLE);
                     tab2.setVisibility(View.INVISIBLE);
+                    tab3.setVisibility(View.INVISIBLE);
                     return true;
-                case R.id.navigation_dashboard:
+                case R.id.navigation_brightness:
                     tab1.setVisibility(View.INVISIBLE);
                     tab2.setVisibility(View.VISIBLE);
+                    tab3.setVisibility(View.INVISIBLE);
                     return true;
-                case R.id.navigation_notifications:
+                case R.id.navigation_algorithms:
+                    tab1.setVisibility(View.INVISIBLE);
+                    tab2.setVisibility(View.INVISIBLE);
+                    tab3.setVisibility(View.VISIBLE);
                     return true;
             }
             return false;
@@ -74,6 +80,7 @@ public class MainActivity extends AppCompatActivity {
         this.editText = (EditText)findViewById(R.id.editText);
         this.tab1 = (RelativeLayout)findViewById(R.id.tab1);
         this.tab2 = (RelativeLayout)findViewById(R.id.tab2);
+        this.tab3 = (RelativeLayout)findViewById(R.id.tab3);
 
         WebSettings settings = webview.getSettings();
         settings.setJavaScriptEnabled(true);
