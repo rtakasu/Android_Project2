@@ -121,11 +121,11 @@ public class MainActivity extends AppCompatActivity {
         this.webview = (WebView)findViewById(R.id.webview);
         this.editText = (EditText)findViewById(R.id.editText);
         this.listSizeSpinner = (Spinner)findViewById(R.id.listSizeSpinner);
-        String[] items = new String[]{"10", "1,000", "10,000", "25,000", "100,000"};
+        String[] items = new String[]{"10", "100", "1,000", "10,000", "100,000", "1,000,000"};
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, items);
         listSizeSpinner.setAdapter(adapter);
         this.runTimesSpinner = (Spinner)findViewById(R.id.runTimesSpinner);
-        items = new String[]{"10", "50", "100", "500", "10,000"};
+        items = new String[]{"1","10", "100", "1,000", "10,000", "100,000", "1,000,000"};
         adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, items);
         runTimesSpinner.setAdapter(adapter);
         this.timerTextView = (TextView)findViewById(R.id.timerTextView);
