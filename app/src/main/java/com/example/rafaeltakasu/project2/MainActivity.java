@@ -10,6 +10,7 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.KeyEvent;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
@@ -25,9 +26,14 @@ import android.widget.Spinner;
 import android.widget.ArrayAdapter;
 import android.widget.AdapterView;
 import android.widget.Toast;
+import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.content.pm.ApplicationInfo;
+
 
 import org.w3c.dom.Text;
 
+import java.util.Arrays;
 import java.util.TimerTask;
 import java.util.Random;
 
@@ -54,6 +60,7 @@ public class MainActivity extends AppCompatActivity {
     private Button med_brightness_button;
     private Button max_brightness_button;
     private Button selectionSortButton;
+    private Button mergeSortButton;
 
     long startTime = 0;
     //runs without a timer by reposting this handler at the end of the runnable
@@ -104,7 +111,7 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        setTitle("");
+        setTitle("Let's Test The Battery");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
@@ -114,11 +121,11 @@ public class MainActivity extends AppCompatActivity {
         this.webview = (WebView)findViewById(R.id.webview);
         this.editText = (EditText)findViewById(R.id.editText);
         this.listSizeSpinner = (Spinner)findViewById(R.id.listSizeSpinner);
-        String[] items = new String[]{"10", "1,000", "10,000", "100,000"};
+        String[] items = new String[]{"10", "1,000", "10,000", "25,000", "100,000"};
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, items);
         listSizeSpinner.setAdapter(adapter);
         this.runTimesSpinner = (Spinner)findViewById(R.id.runTimesSpinner);
-        items = new String[]{"10", "50", "100"};
+        items = new String[]{"10", "50", "100", "500", "10,000"};
         adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, items);
         runTimesSpinner.setAdapter(adapter);
         this.timerTextView = (TextView)findViewById(R.id.timerTextView);
@@ -206,6 +213,10 @@ public class MainActivity extends AppCompatActivity {
         SelectionSortClickListener selectionClickListener = new SelectionSortClickListener();
         selectionSortButton.setOnClickListener(selectionClickListener);
 
+        mergeSortButton = (Button) findViewById(R.id.mergeSortButton);
+        MergeSortClickListener mergeClickListener = new MergeSortClickListener();
+        mergeSortButton.setOnClickListener(mergeClickListener);
+
         min_brightness_button = (Button) findViewById(R.id.min_brightness);
         med_brightness_button = (Button) findViewById(R.id.med_brightness);
         max_brightness_button = (Button) findViewById(R.id.max_brightness);
@@ -218,6 +229,27 @@ public class MainActivity extends AppCompatActivity {
         med_brightness_button.setOnClickListener(medOnClickListener);
         MaxBrightnessClickListener maxOnClickListener = new MaxBrightnessClickListener();
         max_brightness_button.setOnClickListener(maxOnClickListener);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.menu_main, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch(item.getItemId()) {
+        case R.id.accuBattery:
+            Intent i = new Intent(Intent.ACTION_MAIN);
+            PackageManager pm = getPackageManager();
+            i = pm.getLaunchIntentForPackage("com.digibites.accubattery");
+            i.addCategory(Intent.CATEGORY_LAUNCHER);
+            startActivity(i);
+            return(true);
+        }
+        return(super.onOptionsItemSelected(item));
     }
 
 
@@ -243,6 +275,62 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    private class MergeSortClickListener implements View.OnClickListener {
+        @Override
+        public void onClick(View v){
+            Random rand = new Random();
+            String size = listSizeSpinner.getSelectedItem().toString();
+            String times = runTimesSpinner.getSelectedItem().toString();
+            int numTimes = Integer.parseInt(times.replaceAll(",", ""));
+            for (int x = 0; x < numTimes; x++) {
+                int listSize = Integer.parseInt(size.replaceAll(",", ""));
+                int list[] = new int[listSize];
+                int tmp[] = new int[listSize];
+                for (int i = 0; i < list.length; i++) {
+                    list[i] = rand.nextInt(listSize);
+                }
+                mergeSort(list, tmp, 0, list.length-1);
+            }
+            selectionSortTextView.setText("Finished sorting " + times + " lists of size " + size + " using Merge Sort!");
+        }
+
+        private void mergeSort(int [ ] a, int [ ] tmp, int left, int right)
+        {
+            if( left < right )
+            {
+                int center = (left + right) / 2;
+                mergeSort(a, tmp, left, center);
+                mergeSort(a, tmp, center + 1, right);
+                merge(a, tmp, left, center + 1, right);
+            }
+        }
+
+        private void merge(int[ ] a, int[ ] tmp, int left, int right, int rightEnd )
+        {
+            int leftEnd = right - 1;
+            int k = left;
+            int num = rightEnd - left + 1;
+
+            while(left <= leftEnd && right <= rightEnd)
+                if(a[left]<=a[right])
+                    tmp[k++] = a[left++];
+                else
+                    tmp[k++] = a[right++];
+
+            while(left <= leftEnd)    // Copy rest of first half
+                tmp[k++] = a[left++];
+
+            while(right <= rightEnd)  // Copy rest of right half
+                tmp[k++] = a[right++];
+
+            // Copy tmp back
+            for(int i = 0; i < num; i++, rightEnd--)
+                a[rightEnd] = tmp[rightEnd];
+        }
+
+
+    }
+
     private class SelectionSortClickListener implements View.OnClickListener  {
         @Override
         public void onClick(View v)  {
@@ -250,7 +338,7 @@ public class MainActivity extends AppCompatActivity {
             Random rand = new Random();
             String size = listSizeSpinner.getSelectedItem().toString();
             String times = runTimesSpinner.getSelectedItem().toString();
-            int numTimes = Integer.parseInt(times);
+            int numTimes = Integer.parseInt(times.replaceAll(",",""));
             for (int x = 0; x < numTimes; x++) {
                 int listSize = Integer.parseInt(size.replaceAll(",", ""));
                 int list[] = new int[listSize];

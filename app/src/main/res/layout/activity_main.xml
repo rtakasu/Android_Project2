@@ -180,6 +180,13 @@
                 android:layout_below="@+id/listSizeSpinner"
                 android:text="Run Selection Sort"
                 android:textSize="12sp"/>
+            <Button
+                android:id="@+id/mergeSortButton"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/selectionSortButton"
+                android:text="Run Merge Sort"
+                android:textSize="12sp"/>
 
             <TextView
                 android:id="@+id/selectionSortTextView"
